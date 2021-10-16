@@ -1,1 +1,6 @@
 db/
+*.bak
+output_files/
+simulation/
+incremental_db/
+*.vwf

@@ -107,8 +107,8 @@ module regfile (
 	tri_32bit trib_6(data_readRegB, regOut[6], selB[6]);
 	tri_32bit trib_7(data_readRegB, regOut[7], selB[7]);
 	tri_32bit trib_8(data_readRegB, regOut[8], selB[8]);
-	tri_32bit trib_9(data_readRegB, regOut[9], selB[9]);
-	tri_32bit trib_10(data_readRegB, regOut[10], selB[10]);
+tri_32bit trib_9(data_readRegB, regOut[9], selB[9]);
+tri_32bit trib_10(data_readRegB, regOut[10], selB[10]);
 	tri_32bit trib_11(data_readRegB, regOut[11], selB[11]);
 	tri_32bit trib_12(data_readRegB, regOut[12], selB[12]);
 	tri_32bit trib_13(data_readRegB, regOut[13], selB[13]);
