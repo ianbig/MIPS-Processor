@@ -48,6 +48,9 @@
  *
  */
 module processor(
+	 
+	 out_PC,
+	 in_PC,
     // Control signals
     clock,                          // I: The master clock
     reset,                          // I: A reset signal
@@ -91,5 +94,11 @@ module processor(
     input [31:0] data_readRegA, data_readRegB;
 
     /* YOUR CODE STARTS HERE */
+	 //wire [11:0] out_PC;
+	 //wire [11:0] in_PC;
+	 output [11:0] out_PC;
+	 output [11:0] in_PC;
+	 register_12bit PC(out_PC, in_PC, clock, reset);
+	 adder_12bit PC_adder(out_PC, 1, in_PC);
 
 endmodule
