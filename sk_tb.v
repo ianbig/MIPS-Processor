@@ -8,8 +8,8 @@ module sk_tb();
         (these may be inverted, divided, or unchanged from the original clock input). Your grade will be 
         based on proper functioning with this clock.
     */
-    wire imem_clock, dmem_clock, processor_clock, regfile_clock, q;
-
+    wire imem_clock, dmem_clock, processor_clock, regfile_clock;
+	 wire [31:0] q;
 	 
 	 integer errors;
 	 
