@@ -9,7 +9,7 @@
  * inspect which signals the processor tries to assert when.
  */
 
-module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock);
+module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q_imem);
     input clock, reset;
     /* 
         Create four clocks for each module from the original input "clock".
@@ -24,7 +24,10 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
     // Figure out how to generate a Quartus syncram component and commit the generated verilog file.
     // Make sure you configure it correctly!
     wire [11:0] address_imem;
-    wire [31:0] q_imem;
+    // wire [31:0] q_imem;
+	 output [31:0] q_imem;
+	 
+	 assign imem_clock = clock; // TODO: delete
     imem my_imem(
         .address    (address_imem),            // address of data
         .clock      (imem_clock),                  // you may need to invert the clock
@@ -63,6 +66,8 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
         data_readRegA,
         data_readRegB
     );
+	 
+	 assign processor_clock = clock; // TODO: delete
 
     /** PROCESSOR **/
     processor my_processor(
