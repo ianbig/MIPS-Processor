@@ -9,11 +9,11 @@ module sk_tb();
         based on proper functioning with this clock.
     */
     wire imem_clock, dmem_clock, processor_clock, regfile_clock;
-	 wire [31:0] q;
+	 wire [31:0] q, ALU_reg_imm, ALU_reg_test;
 	 
 	 integer errors;
 	 
-	 skeleton ske(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q);
+	 skeleton ske(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q, ALU_reg_imm, ALU_reg_test);
 	 
     // setting the initial values of all the reg
     initial

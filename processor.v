@@ -48,6 +48,8 @@
  *
  */
 module processor(
+	 ALU_reg_imm, //test
+	 ALU_reg_test, //test
 	 
     // Control signals
     clock,                          // I: The master clock
@@ -96,5 +98,29 @@ module processor(
 	 wire [11:0] in_PC;
 	 register_12bit PC(address_imem, in_PC, clock, reset);
 	 adder_12bit PC_adder(address_imem, 1, in_PC);
+	 
+	 wire rdst; //select bit for rdst mux
+	 wire aluinb; //seclect bit for alu mux
+	 wire rwd; //select bit for data mem output
+	 control control_logic(q_imem[31:27], ctrl_writeEnable, rdst, aluinb, wren, rwd);
+	 
+	 assign ctrl_readRegA = q_imem[21:17];
+	 assign ctrl_readRegB = q_imem[16:12];
+	 assign ctrl_writeReg = q_imem[26:22]; //need mux
+	 
+	 wire [31:0] out_sx;
+	 sx_32bit sign_extention(q_imem[16:0], out_sx);
+	 
+	 //wire [31:0] ALU_reg_imm;
+	 output [31:0] ALU_reg_imm; //test
+	 output [31:0] ALU_reg_test;  //test
+	 assign ALU_reg_test = data_readRegA;  //test
+	 mux_2to1_32bit mux_ALU(data_readRegB, out_sx, aluinb, ALU_reg_imm);
+	 
+	 wire isNotEqual, isLessThan, overflow;
+	 wire [4:0] ALU_op;
+	 assign ALU_op = (q_imem[31:27] == 5'b00000) ? q_imem[6:2] : 5'b00000; 
+	 alu my_alu(data_readRegA, ALU_reg_imm, ALU_op, q_imem[11:7], data_writeReg, 
+					isNotEqual, isLessThan, overflow);
 
 endmodule
