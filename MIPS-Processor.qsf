@@ -39,7 +39,15 @@
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
+<<<<<<< HEAD
 set_global_assignment -name TOP_LEVEL_ENTITY sx_32bit
+=======
+<<<<<<< HEAD
+set_global_assignment -name TOP_LEVEL_ENTITY dmem
+=======
+set_global_assignment -name TOP_LEVEL_ENTITY mux_2to1_32bit
+>>>>>>> 52a4aea50a6af26df1ef1c7d2fdbaeebeaca15a2
+>>>>>>> 98610d6d701f096b3dc1189d7ebfc59c5a3b4472
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:14:33  OCTOBER 16, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION 16.0.0
@@ -53,7 +61,6 @@ set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
 set_global_assignment -name VERILOG_FILE regfile.v
 set_global_assignment -name VERILOG_FILE decoder_5to32_32bit.v
-set_global_assignment -name VERILOG_FILE dffe.v
 set_global_assignment -name VERILOG_FILE dffe_ref.v
 set_global_assignment -name VERILOG_FILE register_32bit.v
 set_global_assignment -name VERILOG_FILE tri_32bit.v
@@ -68,22 +75,41 @@ set_global_assignment -name VERILOG_FILE SLL_32bit.v
 set_global_assignment -name VERILOG_FILE mux_2to1_4bit.v
 set_global_assignment -name VERILOG_FILE mux_2to1_1bit.v
 set_global_assignment -name VERILOG_FILE FA_4bit.v
-set_global_assignment -name VERILOG_FILE CSA_32bit.v
 set_global_assignment -name VERILOG_FILE bitwise_logic.v
 set_global_assignment -name VERILOG_FILE alu.v
 set_global_assignment -name VERILOG_FILE adder_12bit.v
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+<<<<<<< HEAD
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH sx_32bit_tb -section_id eda_simulation
+=======
+<<<<<<< HEAD
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH dmem_tb -section_id eda_simulation
+=======
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH mux_2to1_32bit_tb -section_id eda_simulation
+>>>>>>> 52a4aea50a6af26df1ef1c7d2fdbaeebeaca15a2
+>>>>>>> 98610d6d701f096b3dc1189d7ebfc59c5a3b4472
 set_global_assignment -name VERILOG_FILE MIPS_Processor_tb.v
 set_global_assignment -name VERILOG_FILE control.v
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
 set_global_assignment -name VERILOG_FILE control_tb.v
 set_global_assignment -name VERILOG_FILE sk_tb.v
+<<<<<<< HEAD
+set_global_assignment -name VERILOG_FILE CSA_32bit.v
+set_global_assignment -name VERILOG_FILE dmem_tb.v
+set_global_assignment -name EDA_TEST_BENCH_NAME dmem_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id dmem_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME dmem_tb -section_id dmem_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE dmem_tb.v -section_id dmem_tb
+=======
 set_global_assignment -name VERILOG_FILE mux_2to1_32bit.v
+<<<<<<< HEAD
 set_global_assignment -name VERILOG_FILE mux_2to1_32bit_tb.v
 set_global_assignment -name VERILOG_FILE sx_32bit.v
+=======
+>>>>>>> 52a4aea50a6af26df1ef1c7d2fdbaeebeaca15a2
+>>>>>>> 98610d6d701f096b3dc1189d7ebfc59c5a3b4472
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
