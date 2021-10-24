@@ -99,28 +99,38 @@ module processor(
 	 register_12bit PC(address_imem, in_PC, clock, reset);
 	 adder_12bit PC_adder(address_imem, 1, in_PC);
 	 
-	 wire rdst; //select bit for rdst mux
 	 wire aluinb; //seclect bit for alu mux
 	 wire rwd; //select bit for data mem output
-	 control control_logic(q_imem[31:27], ctrl_writeEnable, rdst, aluinb, wren, rwd);
+	 control control_logic(q_imem[31:27], ctrl_writeEnable, aluinb, wren, rwd);
 	 
+	 //regfile
 	 assign ctrl_readRegA = q_imem[21:17];
 	 assign ctrl_readRegB = q_imem[16:12];
-	 assign ctrl_writeReg = q_imem[26:22]; //need mux
 	 
+	 wire overflow;
+	 wire [31:0] add_sub_mux, addi_mux, out_ALU;
+	 mux_2to1_5bit ove_rd(q_imem[26:22], 5'b11110, overflow, ctrl_writeReg); //overflow rd
+	 mux_2to1_32bit add_sub(32'd1, 32'd3, q_imem[2], add_sub_mux); //q_imem[2] = ALU_op[0]
+	 mux_2to1_32bit add_add_mux(add_sub_mux, 32'd2, q_imem[27], addi_mux); //q_imem[27] = opcode[0]
+	 mux_2to1_32bit ove_ALU_mux(out_ALU, addi_mux, overflow, data_writeReg);
+	 
+	 //sign extention
 	 wire [31:0] out_sx;
 	 sx_32bit sign_extention(q_imem[16:0], out_sx);
 	 
+	 //ALU
 	 //wire [31:0] ALU_reg_imm;
 	 output [31:0] ALU_reg_imm; //test
 	 output [31:0] ALU_reg_test;  //test
 	 assign ALU_reg_test = data_readRegA;  //test
 	 mux_2to1_32bit mux_ALU(data_readRegB, out_sx, aluinb, ALU_reg_imm);
 	 
-	 wire isNotEqual, isLessThan, overflow;
+	 wire isNotEqual, isLessThan;
 	 wire [4:0] ALU_op;
 	 assign ALU_op = (q_imem[31:27] == 5'b00000) ? q_imem[6:2] : 5'b00000; 
-	 alu my_alu(data_readRegA, ALU_reg_imm, ALU_op, q_imem[11:7], data_writeReg, 
+	 alu my_alu(data_readRegA, ALU_reg_imm, ALU_op, q_imem[11:7], out_ALU, 
 					isNotEqual, isLessThan, overflow);
+					
+	 
 
 endmodule
