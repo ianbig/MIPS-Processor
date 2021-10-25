@@ -101,9 +101,10 @@ module sk_tb();
 	 end
 	 
 	 always begin
-		#30 regfile_clock = ~regfile_clock;
-		#40 regfile_clock = ~regfile_clock;
-		#40 regfile_clock = ~regfile_clock;
+//		#30 regfile_clock = ~regfile_clock;
+//		#40 regfile_clock = ~regfile_clock;
+//		#40 regfile_clock = ~regfile_clock;
+		#110 regfile_clock = ~regfile_clock;
 		#10 regfile_clock = ~regfile_clock;
 	 end
 
