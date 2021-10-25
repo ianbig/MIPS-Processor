@@ -10,8 +10,8 @@
  */
 
 module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q_imem, ALU_reg_imm,
-			ALU_reg_test);
-    input clock, reset;
+			ALU_reg_test); 
+    input clock, reset, dmem_clock; // TODO: to output
 	 //input imem_clock, dmem_clock, processor_clock, regfile_clock; //TODO: delete
     /* 
         Create four clocks for each module from the original input "clock".
@@ -20,7 +20,7 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
         (these may be inverted, divided, or unchanged from the original clock input). Your grade will be 
         based on proper functioning with this clock.
     */
-    output dmem_clock, imem_clock, processor_clock, regfile_clock;
+    output imem_clock, processor_clock, regfile_clock;
 	 
 	 clock_generator my_clks(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock);
 
