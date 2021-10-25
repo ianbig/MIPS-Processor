@@ -1,6 +1,6 @@
 module clock_generator(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock);
-	input clock, reset;
-	output imem_clock, dmem_clock, processor_clock, regfile_clock;
+	input clock, reset, dmem_clock;
+	output imem_clock, processor_clock, regfile_clock;
 	
 	//clk_div_6 clk_processor(clock, reset, processor_clock);
 	sqwaveGen clk_processor(clock, reset, 4'd3, 4'd3, processor_clock);
