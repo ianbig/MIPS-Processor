@@ -1,7 +1,7 @@
 `timescale 1 ns / 100 ps
 module sk_tb();
 	 reg clock, reset;
-	 reg imem_clock, dmem_clock, processor_clock, regfile_clock;
+	 //reg imem_clock, dmem_clock, processor_clock, regfile_clock;
     /* 
         Create four clocks for each module from the original input "clock".
         These four outputs will be used to run the clocked elements of your processor on the grading side. 
@@ -9,7 +9,7 @@ module sk_tb();
         (these may be inverted, divided, or unchanged from the original clock input). Your grade will be 
         based on proper functioning with this clock.
     */
-    //wire imem_clock, dmem_clock, processor_clock, regfile_clock; /
+    wire imem_clock, dmem_clock, processor_clock, regfile_clock; /
 	 wire [31:0] q, ALU_reg_imm, ALU_reg_test;
 	 
 	 integer errors;

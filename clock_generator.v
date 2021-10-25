@@ -6,5 +6,6 @@ module clock_generator(clock, reset, imem_clock, dmem_clock, processor_clock, re
 	sqwaveGen clk_processor(clock, reset, 4'd3, 4'd3, processor_clock);
 	sqwaveGen clk_imem(~clock, reset, 4'd3, 4'd3, imem_clock);
 	sqwaveGen clk_regfile(~clock, reset, 4'd4, 4'd2, regfile_clock);
+	
 endmodule
 	

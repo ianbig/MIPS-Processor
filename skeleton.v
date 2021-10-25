@@ -12,7 +12,7 @@
 module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q_imem, ALU_reg_imm,
 			ALU_reg_test);
     input clock, reset;
-	 input imem_clock, dmem_clock, processor_clock, regfile_clock; //TODO: delete
+	 //input imem_clock, dmem_clock, processor_clock, regfile_clock; //TODO: delete
     /* 
         Create four clocks for each module from the original input "clock".
         These four outputs will be used to run the clocked elements of your processor on the grading side. 
@@ -20,7 +20,9 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
         (these may be inverted, divided, or unchanged from the original clock input). Your grade will be 
         based on proper functioning with this clock.
     */
-    //output dmem_clock, imem_clock, processor_clock, regfile_clock;
+    output dmem_clock, imem_clock, processor_clock, regfile_clock;
+	 
+	 clock_generator my_clks(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock);
 
     /** IMEM **/
     // Figure out how to generate a Quartus syncram component and commit the generated verilog file.
