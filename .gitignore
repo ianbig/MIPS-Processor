@@ -6,5 +6,3 @@ incremental_db/
 *.vwf
 *.rpt
 greybox_tmp/
-*.qsf
-*.qrf
