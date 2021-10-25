@@ -108,11 +108,11 @@ module processor(
 	 assign ctrl_readRegB = q_imem[16:12];
 	 
 	 wire overflow;
-	 wire [31:0] add_sub_mux, addi_mux, out_ALU;
+	 wire [31:0] add_sub_mux, addi_mux, out_ALU, mux_ALU_Dmem;
 	 mux_2to1_5bit ove_rd(q_imem[26:22], 5'b11110, overflow, ctrl_writeReg); //overflow rd
 	 mux_2to1_32bit add_sub(32'd1, 32'd3, q_imem[2], add_sub_mux); //q_imem[2] = ALU_op[0]
 	 mux_2to1_32bit add_add_mux(add_sub_mux, 32'd2, q_imem[27], addi_mux); //q_imem[27] = opcode[0]
-	 mux_2to1_32bit ove_ALU_mux(out_ALU, addi_mux, overflow, data_writeReg);
+	 mux_2to1_32bit ove_ALU_mux(mux_ALU_Dmem, addi_mux, overflow, data_writeReg);
 	 
 	 //sign extention
 	 wire [31:0] out_sx;
@@ -130,7 +130,11 @@ module processor(
 	 assign ALU_op = (q_imem[31:27] == 5'b00000) ? q_imem[6:2] : 5'b00000; 
 	 alu my_alu(data_readRegA, ALU_reg_imm, ALU_op, q_imem[11:7], out_ALU, 
 					isNotEqual, isLessThan, overflow);
-					
+	
+	 //datamemory
+	 assign address_dmen = out_ALU[11:0];
+	 assign data = data_readRegB;
+	 //mux for alu and data memory
+	 mux_2to1_32bit(q_dmem, out_ALU, rwd, mux_ALU_Dmem);
 	 
-
 endmodule
