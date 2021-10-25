@@ -9,7 +9,7 @@ module sk_tb();
         (these may be inverted, divided, or unchanged from the original clock input). Your grade will be 
         based on proper functioning with this clock.
     */
-    wire imem_clock, dmem_clock, processor_clock, regfile_clock; /
+    wire imem_clock, dmem_clock, processor_clock, regfile_clock;
 	 wire [31:0] q, ALU_reg_imm, ALU_reg_test;
 	 
 	 integer errors;
@@ -21,13 +21,13 @@ module sk_tb();
     begin
         $display($time, " << Starting the Simulation >>");
         clock = 1'b0;    // at time 0
-		  processor_clock = 1'b1; //TODO: delete
+		  //processor_clock = 1'b1; //TODO: delete
         errors = 0;
-		  dmem_clock = 1'b0; //TODO: delete
-		  regfile_clock = 1'b0; //TODO: delete
+		//  dmem_clock = 1'b0; //TODO: delete
+		//  regfile_clock = 1'b0; //TODO: delete
         reset = 1'b1;    // assert reset
 		  
-		  imem_clock = 1'b0;
+		//  imem_clock = 1'b0;
         @(negedge processor_clock);    // wait until next negative edge of clock
         @(negedge processor_clock);    // wait until next negative edge of clock
 
@@ -87,26 +87,26 @@ module sk_tb();
 
 
     // Clock generator
-    always begin
-         #10     clock = ~clock;    // toggle
-	 end
-	 
-	 always begin
-		 #60 processor_clock= ~processor_clock;
-	 end
-	 
-	 always begin
-		 #10 imem_clock= ~imem_clock;
-		 #110 imem_clock = ~imem_clock;
-	 end
-	 
-	 always begin
-//		#30 regfile_clock = ~regfile_clock;
-//		#40 regfile_clock = ~regfile_clock;
-//		#40 regfile_clock = ~regfile_clock;
-		#110 regfile_clock = ~regfile_clock;
-		#10 regfile_clock = ~regfile_clock;
-	 end
+//    always begin
+//         #10     clock = ~clock;    // toggle
+//	 end
+//	 
+//	 always begin
+//		 #60 processor_clock= ~processor_clock;
+//	 end
+//	 
+//	 always begin
+//		 #10 imem_clock= ~imem_clock;
+//		 #110 imem_clock = ~imem_clock;
+//	 end
+//	 
+//	 always begin
+////		#30 regfile_clock = ~regfile_clock;
+////		#40 regfile_clock = ~regfile_clock;
+////		#40 regfile_clock = ~regfile_clock;
+//		#110 regfile_clock = ~regfile_clock;
+//		#10 regfile_clock = ~regfile_clock;
+//	 end
 
 	 task check;
 			
