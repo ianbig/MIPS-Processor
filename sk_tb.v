@@ -10,11 +10,10 @@ module sk_tb();
         based on proper functioning with this clock.
     */
 
-    wire imem_clock, processor_clock, regfile_clock;
+    wire imem_clock, dmem_clock, processor_clock, regfile_clock;
 	 wire [31:0] q, ALU_reg_imm, ALU_reg_test;
 	 
 	 integer errors;
-	 reg dmem_clock; // TODO: delete
 	 
 	 skeleton ske(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q, ALU_reg_imm, ALU_reg_test);
 	 
@@ -23,13 +22,9 @@ module sk_tb();
     begin
         $display($time, " << Starting the Simulation >>");
         clock = 1'b0;    // at time 0
-		  //processor_clock = 1'b1; //TODO: delete
         errors = 0;
-		dmem_clock = 1'b0; //TODO: delete
-		//  regfile_clock = 1'b0; //TODO: delete
         reset = 1'b1;    // assert reset
-		  
-		//  imem_clock = 1'b0;
+		 
         @(negedge clock);    // wait until next negative edge of clock
         @(negedge clock);    // wait until next negative edge of clock
 
@@ -101,10 +96,10 @@ module sk_tb();
          #10     clock = ~clock;    // toggle
 	 end
 	 
-	 always begin
-		#80 dmem_clock = ~dmem_clock;
-		#40 dmem_clock = ~dmem_clock;
-	end
+//	 always begin
+//		#80 dmem_clock = ~dmem_clock;
+//		#40 dmem_clock = ~dmem_clock;
+//	end
 //	 
 //	 always begin
 //		 #60 processor_clock= ~processor_clock;
