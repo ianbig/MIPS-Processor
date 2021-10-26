@@ -132,7 +132,7 @@ module processor(
 					isNotEqual, isLessThan, overflow);
 	
 	 //datamemory
-	 assign address_dmen = out_ALU[11:0];
+	 assign address_dmem = out_ALU[11:0];
 	 assign data = data_readRegB;
 	 //mux for alu and data memory
 	 mux_2to1_32bit(out_ALU, q_dmem, rwd, mux_ALU_Dmem);
