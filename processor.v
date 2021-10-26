@@ -48,9 +48,6 @@
  *
  */
 module processor(
-	 ALU_reg_imm, //test
-	 ALU_reg_test, //test
-	 
     // Control signals
     clock,                          // I: The master clock
     reset,                          // I: A reset signal
@@ -101,11 +98,13 @@ module processor(
 	 
 	 wire aluinb; //seclect bit for alu mux
 	 wire rwd; //select bit for data mem output
-	 control control_logic(q_imem[31:27], ctrl_writeEnable, aluinb, wren, rwd);
+	 wire rtrd;
+	 control control_logic(q_imem[31:27], ctrl_writeEnable, aluinb, wren, rwd, rtrd);
 	 
 	 //regfile
 	 assign ctrl_readRegA = q_imem[21:17];
-	 assign ctrl_readRegB = q_imem[16:12];
+	 //assign ctrl_readRegB = q_imem[16:12];
+	 mux_2to1_5bit RtRd(q_imem[16:12], q_imem[26:22], rtrd, ctrl_readRegB); //sw instruction
 	 
 	 wire overflow;
 	 wire [31:0] add_sub_mux, addi_mux, out_ALU, mux_ALU_Dmem;
@@ -119,10 +118,7 @@ module processor(
 	 sx_32bit sign_extention(q_imem[16:0], out_sx);
 	 
 	 //ALU
-	 //wire [31:0] ALU_reg_imm;
-	 output [31:0] ALU_reg_imm; //test
-	 output [31:0] ALU_reg_test;  //test
-	 assign ALU_reg_test = data_readRegA;  //test
+	 wire [31:0] ALU_reg_imm;
 	 mux_2to1_32bit mux_ALU(data_readRegB, out_sx, aluinb, ALU_reg_imm);
 	 
 	 wire isNotEqual, isLessThan;
@@ -135,6 +131,6 @@ module processor(
 	 assign address_dmem = out_ALU[11:0];
 	 assign data = data_readRegB;
 	 //mux for alu and data memory
-	 mux_2to1_32bit(out_ALU, q_dmem, rwd, mux_ALU_Dmem);
+	 mux_2to1_32bit data_out(out_ALU, q_dmem, rwd, mux_ALU_Dmem);
 	 
 endmodule

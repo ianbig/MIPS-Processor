@@ -59,7 +59,7 @@ dmem my_dmem(
 
     // Clock generator
     always
-         #5.5     clock = ~clock;    // toggle
+         #15     clock = ~clock;    // toggle
 
     // Task for writing
     task writeMem;

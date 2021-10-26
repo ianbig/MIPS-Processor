@@ -9,10 +9,8 @@
  * inspect which signals the processor tries to assert when.
  */
 
-module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q_imem, ALU_reg_imm,
-			ALU_reg_test); 
+module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock); 
     input clock, reset;
-	 //input imem_clock, dmem_clock, processor_clock, regfile_clock; //TODO: delete
     /* 
         Create four clocks for each module from the original input "clock".
         These four outputs will be used to run the clocked elements of your processor on the grading side. 
@@ -22,15 +20,14 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
     */
     output imem_clock, dmem_clock, processor_clock, regfile_clock;
 	 
-	 clock_generator my_clks(clock, reset, imem_clock, processor_clock, regfile_clock);
+	 clock_generator my_clks(clock, reset, dmem_clock, processor_clock, regfile_clock);
+	 assign imem_clock = clock; 					//imem_clock
 
     /** IMEM **/
     // Figure out how to generate a Quartus syncram component and commit the generated verilog file.
     // Make sure you configure it correctly!
     wire [11:0] address_imem;
-    // wire [31:0] q_imem;
-	 output [31:0] q_imem;
-	 output [31:0] ALU_reg_imm, ALU_reg_test;
+    wire [31:0] q_imem;
 	 
     imem my_imem(
         .address    (address_imem),            // address of data
@@ -46,11 +43,11 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
     wire wren;
     wire [31:0] q_dmem;
     dmem my_dmem(
-        .address    (/* 12-bit wire */),       // address of data
+        .address    (address_dmem),       // address of data
         .clock      (dmem_clock),                  // may need to invert the clock
-        .data	    (/* 32-bit data in */),    // data you want to write
-        .wren	    (/* 1-bit signal */),      // write enable
-        .q          (/* 32-bit data out */)    // data from dmem
+        .data	    (data),    // data you want to write
+        .wren	    (wren),      // write enable
+        .q          (q_dmem)    // data from dmem
     );
 
     /** REGFILE **/
@@ -74,9 +71,6 @@ module skeleton(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_c
 
     /** PROCESSOR **/
     processor my_processor(
-			ALU_reg_imm, //test
-			ALU_reg_test, //test
-	 
         // Control signals
         processor_clock,                          // I: The master clock
         reset,                          // I: A reset signal
