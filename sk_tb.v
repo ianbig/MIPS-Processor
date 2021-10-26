@@ -100,6 +100,11 @@ module sk_tb();
     always begin
          #10     clock = ~clock;    // toggle
 	 end
+	 
+	 always begin
+		#80 dmem_clock = ~dmem_clock;
+		#40 dmem_clock = ~dmem_clock;
+	end
 //	 
 //	 always begin
 //		 #60 processor_clock= ~processor_clock;
