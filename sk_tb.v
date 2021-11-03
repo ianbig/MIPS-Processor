@@ -10,11 +10,10 @@ module sk_tb();
         based on proper functioning with this clock.
     */
 
-    wire imem_clock, processor_clock, regfile_clock;
+    wire imem_clock, processor_clock, regfile_clock, dmem_clock;
 	 wire [31:0] q, ALU_reg_imm, ALU_reg_test;
 	 
 	 integer errors;
-	 reg dmem_clock; // TODO: delete
 	 
 	 skeleton ske(clock, reset, imem_clock, dmem_clock, processor_clock, regfile_clock, q, ALU_reg_imm, ALU_reg_test);
 	 
@@ -25,7 +24,6 @@ module sk_tb();
         clock = 1'b0;    // at time 0
 		  //processor_clock = 1'b1; //TODO: delete
         errors = 0;
-		dmem_clock = 1'b0; //TODO: delete
 		//  regfile_clock = 1'b0; //TODO: delete
         reset = 1'b1;    // assert reset
 		  
