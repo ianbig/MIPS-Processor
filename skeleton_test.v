@@ -76,11 +76,11 @@ module skeleton_test(clock, reset, test, t_ctrl_writeEnable, t_ctrl_writeReg, t_
     wire [31:0] r_data_writeReg;
     wire [31:0] r_data_readRegA, r_data_readRegB;
 	 
-    mux_2_1bit	mux0(ctrl_writeEnable, t_ctrl_writeEnable, test, r_ctrl_writeEnable);
-    mux_2_5bit  mux1(ctrl_writeReg, t_ctrl_writeReg, test, r_ctrl_writeReg);
-    mux_2_5bit  mux2(ctrl_readRegA, t_ctrl_readRegA, test, r_ctrl_readRegA);
-    mux_2_5bit  mux3(ctrl_readRegB, t_ctrl_readRegB, test, r_ctrl_readRegB);
-    mux_2 		mux4(data_writeReg, t_data_writeReg, test, r_data_writeReg);
+    mux_2to1_1bit	mux0(ctrl_writeEnable, t_ctrl_writeEnable, test, r_ctrl_writeEnable);
+    mux_2to1_5bit  mux1(ctrl_writeReg, t_ctrl_writeReg, test, r_ctrl_writeReg);
+    mux_2to1_5bit  mux2(ctrl_readRegA, t_ctrl_readRegA, test, r_ctrl_readRegA);
+    mux_2to1_5bit  mux3(ctrl_readRegB, t_ctrl_readRegB, test, r_ctrl_readRegB);
+    mux_2to1_32bit mux4(data_writeReg, t_data_writeReg, test, r_data_writeReg);
     assign t_data_readRegA = r_data_readRegA;
     assign t_data_readRegB = r_data_readRegB;
 	 
