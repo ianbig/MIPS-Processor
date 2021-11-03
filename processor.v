@@ -95,7 +95,7 @@ module processor(
 	 //PC
 	 wire [11:0] in_PC, outPC1;
 	 register_12bit PC(address_imem, in_PC, clock, reset);
-	 adder_12bit PC_adder(address_imem, 1, outPC1);
+	 adder_12bit PC_adder(address_imem, 12'd1, outPC1);
 	 
 	 wire aluinb; //seclect bit for alu mux
 	 wire rwd; //select bit for data mem output
@@ -145,7 +145,7 @@ module processor(
 	 assign conD = j | bexN;
 	 
 	 //branch
-	 wire resultB, resultD, b1;
+	 wire [11:0] resultB, resultD, b1;
 	 mux_2to1_12bit muxD(outPC1, q_imem[11:0], conD, resultD);
 	 adder_12bit bradder(q_imem[11:0], outPC1, b1);
 	 mux_2to1_12bit muxB(resultD, b1, conB, resultB);
