@@ -92,14 +92,16 @@ module processor(
 
     /* YOUR CODE STARTS HERE */
 
-	 wire [11:0] in_PC;
+	 //PC
+	 wire [11:0] in_PC, outPC1;
 	 register_12bit PC(address_imem, in_PC, clock, reset);
-	 adder_12bit PC_adder(address_imem, 1, in_PC);
+	 adder_12bit PC_adder(address_imem, 1, outPC1);
 	 
 	 wire aluinb; //seclect bit for alu mux
 	 wire rwd; //select bit for data mem output
-	 wire rtrd;
-	 control control_logic(q_imem[31:27], ctrl_writeEnable, aluinb, wren, rwd, rtrd);
+	 wire rtrd, j, bne, jal, jr, bex, blt, setx, sub;
+	 control control_logic(q_imem[31:27], ctrl_writeEnable, aluinb, wren, rwd, rtrd,
+									j, bne, jal, jr, bex, blt, setx, sub);
 	 
 	 //regfile
 	 assign ctrl_readRegA = q_imem[21:17];
@@ -121,12 +123,34 @@ module processor(
 	 wire [31:0] ALU_reg_imm;
 	 mux_2to1_32bit mux_ALU(data_readRegB, out_sx, aluinb, ALU_reg_imm);
 	 
-	 wire isNotEqual, isLessThan;
+	 wire isNotEqual, isLessThan, subw;
 	 wire [4:0] ALU_op;
-	 assign ALU_op = (q_imem[31:27] == 5'b00000) ? q_imem[6:2] : 5'b00000; 
+	 assign subw = sub ? 5'b00001 : 5'b00000;
+	 assign ALU_op = (q_imem[31:27] == 5'b00000) ? q_imem[6:2] : subw; 
 	 alu my_alu(data_readRegA, ALU_reg_imm, ALU_op, q_imem[11:7], out_ALU, 
 					isNotEqual, isLessThan, overflow);
-	
+	 
+	 
+	 //control B
+	 wire rdLTrs, bltrdrs, bneiNE, conB;
+	 assign rdLTrs = ~isLessThan & isNotEqual;
+	 assign bltrdrs = blt & rdLTrs;
+	 assign bneiNE = bne & isNotEqual;
+	 assign conB = bltrdrs | bneiNE;
+	 
+	 
+	 //control D
+	 wire bexN, conD;
+	 assign bexN = bex & isNotEqual;
+	 assign conD = j | bexN;
+	 
+	 //branch
+	 wire resultB, resultD, b1;
+	 mux_2to1_12bit muxD(outPC1, q_imem[11:0], conD, resultD);
+	 adder_12bit bradder(q_imem[11:0], outPC1, b1);
+	 mux_2to1_12bit muxB(resultD, b1, conB, resultB);
+	 mux_2to1_12bit muxjr(resultB, data_readRegB[11:0], jr, in_PC);
+	 
 	 //datamemory
 	 assign address_dmem = out_ALU[11:0];
 	 assign data = data_readRegB;
