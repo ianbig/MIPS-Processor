@@ -48,6 +48,7 @@
  *
  */
 module processor(
+    ALU_reg_imm, //test
     // Control signals
     clock,                          // I: The master clock
     reset,                          // I: A reset signal
@@ -120,7 +121,8 @@ module processor(
 	 sx_32bit sign_extention(q_imem[16:0], out_sx);
 	 
 	 //ALU
-	 wire [31:0] ALU_reg_imm;
+	 //wire [31:0] ALU_reg_imm;
+	 output [31:0] ALU_reg_imm; //test
 	 mux_2to1_32bit mux_ALU(data_readRegB, out_sx, aluinb, ALU_reg_imm);
 	 
 	 wire isNotEqual, isLessThan, subw;
