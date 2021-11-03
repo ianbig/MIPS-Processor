@@ -15,11 +15,6 @@ module skeleton_test(clock, reset, test, t_ctrl_writeEnable, t_ctrl_writeReg, t_
     /** Clock Divider **/
     // frequency_divider_by2 d1( clock , clock_by2 );
     // frequency_divider_by2 d2( clock_by2 , clock_by4 );
-	 //output imem_clock, dmem_clock, processor_clock, regfile_clock;
-	 
-	 clock_generator my_clks(clock, reset, dmem_clock, processor_clock, regfile_clock);
-	 assign imem_clock = clock; 					//imem_clock
-
 	 
     wire stu_imem_clock,stu_dmem_clock,stu_processor_clock,stu_regfile_clock;
 
