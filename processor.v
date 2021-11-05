@@ -105,9 +105,10 @@ module processor(
 									j, bne, jal, jr, bex, blt, setx, sub);
 	 
 	 //regfile
-	 assign ctrl_readRegA = q_imem[21:17];
-	 //assign ctrl_readRegB = q_imem[16:12];
-	 mux_2to1_5bit RtRd(q_imem[16:12], q_imem[26:22], rtrd, ctrl_readRegB); //sw instruction
+	 wire [4:0] rtrdmux;
+	 mux_2to1_5bit rsmux(q_imem[21:17], 5'd30, bex, ctrl_readRegA); //rs port
+	 mux_2to1_5bit RtRd(q_imem[16:12], q_imem[26:22], rtrd, rtrdmux); //sw instruction
+	 mux_2to1_5bit bexmux(rtrdmux, 5'd0, bex, ctrl_readRegB); //rt port
 	 
 	 wire overflow;
 	 wire [31:0] add_sub_mux, addi_mux, out_ALU, mux_ALU_Dmem;
