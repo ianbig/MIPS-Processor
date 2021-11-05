@@ -105,17 +105,33 @@ module processor(
 									j, bne, jal, jr, bex, blt, setx, sub);
 	 
 	 //regfile
-	 wire [4:0] rtrdmux;
+	 wire [4:0] rtrdmux, rdwire;
 	 mux_2to1_5bit rsmux(q_imem[21:17], 5'd30, bex, ctrl_readRegA); //rs port
 	 mux_2to1_5bit RtRd(q_imem[16:12], q_imem[26:22], rtrd, rtrdmux); //sw instruction
 	 mux_2to1_5bit bexmux(rtrdmux, 5'd0, bex, ctrl_readRegB); //rt port
 	 
-	 wire overflow;
-	 wire [31:0] add_sub_mux, addi_mux, out_ALU, mux_ALU_Dmem;
-	 mux_2to1_5bit ove_rd(q_imem[26:22], 5'b11110, overflow, ctrl_writeReg); //overflow rd
+	 wire overflow, tovf;
+	 wire [31:0] add_sub_mux, addi_mux, out_ALU, mux_ALU_Dmem, tmux1, setx1;
+	 mux_2to1_5bit ove_rd(q_imem[26:22], 5'b11110, (tovf | setx), rdwire); //overflow rd
+	 mux_2to1_5bit jalmux(rdwire, 5'd31, jal, ctrl_writeReg); //rd port
+	 
 	 mux_2to1_32bit add_sub(32'd1, 32'd3, q_imem[2], add_sub_mux); //q_imem[2] = ALU_op[0]
 	 mux_2to1_32bit add_add_mux(add_sub_mux, 32'd2, q_imem[27], addi_mux); //q_imem[27] = opcode[0]
-	 mux_2to1_32bit ove_ALU_mux(mux_ALU_Dmem, addi_mux, overflow, data_writeReg);
+	 
+	 mux_2to1_32bit outpc_mux(mux_ALU_Dmem, {20'd0, outPC1}, jal, tmux1);
+	 mux_2to1_32bit ove_ALU_mux(tmux1, addi_mux, tovf, setx1);
+	 mux_2to1_32bit setx_mux(setx1, {5'd0, q_imem[26:0]}, setx, data_writeReg);
+	 
+	 //tovf logic
+	 wire or_1, or_2, or01, and2_2, and0, or3_2, or101;
+	 assign or_1 = (q_imem[6:2] == 5'b00000) ? 1'b1 : 1'b0;
+	 assign or_2 = (q_imem[6:2] == 5'b00001) ? 1'b1 : 1'b0;
+	 assign or01 = or_1 | or_2;
+	 assign and2_2 = (q_imem[31:27] == 5'b00000) ? 1'b1 : 1'b0;
+	 assign and0 = or01 & and2_2;
+	 assign or3_2 = (q_imem[31:27] == 5'b00101) ? 1'b1: 1'b0;
+	 assign or101 = and0 | or3_2;
+	 assign tovf = or101 & overflow;
 	 
 	 //sign extention
 	 wire [31:0] out_sx;
