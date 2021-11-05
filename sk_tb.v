@@ -89,8 +89,18 @@ module sk_tb();
 		  check(32'b00101011010110100000000000000000, 32'd567, 32'd0); //addi $13, $13, 0 #check r13 = 567
 		  @(negedge processor_clock); // jal 53 #r31 = 49 -48
 		  check(32'b00101111111111100000000000000000, 32'd49, 32'd0); // addi $31, $31, 0 #check r31 = 49 -53
+		  check(32'b00101110110000000000000000110001, 32'd49, 32'd0); // addi $27, $0, 49 #r27 = 49 -54
+		  @(negedge processor_clock); // jr $27 #jump to 49 -55
+		  check(32'b00101111000000000000000000000000, 32'd0, 32'd0); // addi $28, $0, 0 #check jr -49
+		  check(32'b00110110110101000000000000000101, 32'd345, 32'd49); // blt $27, $10, 5 #jump to 56 -50
+		  check(32'b00110010101101100000000000000101, 32'd49, 32'd345); // blt $10, $27, 5 #not jump -56
+		  check(32'b00101111101111000000000000000000, 32'd3, 32'd0); // addi $30, $30, 0 #check rstatus -57
+		  check(32'b10110000000000000000000000111100, 32'd0, 32'd3); // bex 60 #jump to 60 -58
+		  @(negedge processor_clock); // setx 0 #rstatus = 0 -60
+		  check(32'b00101111101111000000000000000000, 32'd0, 32'd0); // addi $30, $30, 0 #check rstatus= 0-61
+		  check(32'b10110000000000000000000000101000, 32'd0, 32'd0); // bex 40 #not jump -62
+		  check(32'b00101111111111100000000000000000, 32'd49, 32'd0); // addi $31, $31, 0 #check r31 = 49 -63
 		  
-
         if (errors == 0) begin
             $display("The simulation completed without errors");
         end
@@ -98,7 +108,7 @@ module sk_tb();
             $display("The simulation failed with %d errors", errors);
         end
 
-        //$stop;
+        $stop;
     end
 
 
