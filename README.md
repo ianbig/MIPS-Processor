@@ -12,7 +12,8 @@
 4. test the result thoroughly (by extend wire to ouput)
 
 ## Datapath Design
-![](https://i.imgur.com/xipEynA.jpg)
+![](https://i.imgur.com/RcNpenn.jpg)
+
 
 ## Control Logic Design
 ![](https://i.imgur.com/7ZR5yiO.jpg)
