@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
-set_global_assignment -name TOP_LEVEL_ENTITY skeleton
+set_global_assignment -name TOP_LEVEL_ENTITY skeleton_test
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:14:33  OCTOBER 16, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION 16.0.0
@@ -73,7 +73,7 @@ set_global_assignment -name VERILOG_FILE adder_12bit.v
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH sk_tb -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH basic_tb -section_id eda_simulation
 set_global_assignment -name VERILOG_FILE MIPS_Processor_tb.v
 set_global_assignment -name VERILOG_FILE control.v
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
